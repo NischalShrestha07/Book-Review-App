@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPUnit\Framework\returnValue;
+
 class AccountController extends Controller
 {
     //this method will show register page
@@ -20,11 +22,12 @@ class AccountController extends Controller
             'name' => 'required|min:3',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:5',
-            //while using confirmed we have to use same name below ass well
+            //while using confirmed we have to use same name below as well
             'password_confirmation' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->route('account.register')->withInput()->withErrors($validator);
+            //Note: old() method will not work if the withInput() is not used
         }
         // Now Register User
         $user = new User();
@@ -32,5 +35,11 @@ class AccountController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
+
+        return redirect()->route('account.login')->with('success', 'You have registered successfully');
+    }
+    public function login()
+    {
+        return view('account.login');
     }
 }

@@ -16,8 +16,14 @@
                 <h1 class="text-center"><a href="index.html" class="h3 text-white text-decoration-none">Book Review
                         App</a></h1>
                 <div class="d-flex align-items-center navigation">
-                    <a href="login.html" class="text-white">Login</a>
-                    <a href="register.html" class="text-white ps-2">Register</a>
+                    {{-- this condition helps to show different links tab at diffent conditions as bellow: --}}
+                    @if (Auth::check())
+                    <a href="{{route('account.profile')}}" class="text-white">My Account</a>
+                    @else
+                    <a href="{{route('account.login')}}" class="text-white">Login</a>
+                    <a href="{{route('account.register')}}" class="text-white ps-2">Register</a>
+
+                    @endif
                 </div>
             </div>
         </div>

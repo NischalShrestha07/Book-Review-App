@@ -21,7 +21,7 @@ class AccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:5',
             //while using confirmed we have to use same name below as well
             'password_confirmation' => 'required',
@@ -64,5 +64,10 @@ class AccountController extends Controller
     public function profile()
     {
         return view('account.profile');
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('account.login');
     }
 }

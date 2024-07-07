@@ -36,10 +36,20 @@ class AccountController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('account.login')->with('success', 'You have registered successfully');
+        return redirect()->route('account.login')->with('run', 'You have registered successfully.');
     }
     public function login()
     {
         return view('account.login');
+    }
+    public function authenticate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('acoount.login')->withInput()->withErrors($validator);
+        }
     }
 }

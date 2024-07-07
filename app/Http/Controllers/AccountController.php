@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,5 +52,17 @@ class AccountController extends Controller
         if ($validator->fails()) {
             return redirect()->route('acoount.login')->withInput()->withErrors($validator);
         }
+        //when entries are valid:
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            //
+            return redirect()->route('account.profile');
+        } else {
+            // when entries are not valid:
+            return redirect()->route('account.login')->with('error', 'Either email/passsword is incorrect.');
+        }
+    }
+    public function profile()
+    {
+        return view('account.profile');
     }
 }

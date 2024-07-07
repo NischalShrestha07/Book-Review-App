@@ -10,6 +10,12 @@
                 <div class="alert alert-success">{{session('run')}}
                 </div>
                 @endif
+
+                {{-- executes when error is found in email and passwords --}}
+                @if (@session('error'))
+                <div class="alert alert-danger">{{session('error')}}
+                </div>
+                @endif
                 <div class="card border border-light-subtle rounded-4">
                     <div class="card-body p-3 p-md-4 p-xl-5">
                         <div class="row">

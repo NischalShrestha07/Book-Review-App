@@ -39,10 +39,13 @@ class AccountController extends Controller
 
         return redirect()->route('account.login')->with('run', 'You have registered successfully.');
     }
+
     public function login()
     {
+
         return view('account.login');
     }
+
     public function authenticate(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -61,10 +64,50 @@ class AccountController extends Controller
             return redirect()->route('account.login')->with('error', 'Either email/passsword is incorrect.');
         }
     }
+    //shows the user profile pages
     public function profile()
     {
-        return view('account.profile');
+        $user = User::find(Auth::user()->id);
+        // dd($user); shows the details in cmd format
+
+        return view('account.profile', [
+            'user' => $user
+        ]);
     }
+    //upadates the user profiles
+    public function updateProfile(Request $request)
+    {
+        $rules = [
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id . ',id',
+        ];
+        if (!empty($request->image)) {
+            $rules['image'] = 'image';
+        }
+        // here is no difference just the $rules is variable of array type is assigned and passed below:
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->route('account.profile')->withInput()->withErrors($validator);
+        }
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+
+        //Here we will upload image
+        $image = $request->image;
+        $ext = $image->getClientOrginalExtension();
+        $imageName = time() . '.' . $ext;
+
+
+
+
+        return redirect()->route('account.profile')->with('success', 'Profile Updated Successfully.');
+    }
+
+
     public function logout()
     {
         Auth::logout();

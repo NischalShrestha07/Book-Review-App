@@ -97,9 +97,17 @@ class AccountController extends Controller
 
 
         //Here we will upload image
-        $image = $request->image;
-        $ext = $image->getClientOrginalExtension();
-        $imageName = time() . '.' . $ext;
+        if (!empty($request->image)) {
+            $image = $request->image;
+            $ext = $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $ext;
+            $image->move(public_path('uploads/profile'), $imageName);
+
+            $user->image = $imageName;
+            $user->save();
+        }
+
+
 
 
 

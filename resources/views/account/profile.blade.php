@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="col-md-9">
-            @include('layouts.message');
+            @include('layouts.message')
             <div class="card border-0 shadow">
                 <div class="card-header  text-white">
                     Profile

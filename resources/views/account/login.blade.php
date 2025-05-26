@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
 
-                {{-- --}}
+
                 @include('layouts.message');
 
 

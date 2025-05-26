@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,7 +19,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'account'], function () {
     Route::group(['middleware' => 'guest'], function () {
         Route::get('register', [AccountController::class, 'register'])->name('account.register');
-        //removed 'account/register' to 'register' 
+        //removed 'account/register' to 'register'
         Route::post('register', [AccountController::class, 'processRegister'])->name('account.processRegister');
 
         Route::get('login', [AccountController::class, 'login'])->name('account.login');
@@ -31,5 +32,10 @@ Route::group(['prefix' => 'account'], function () {
         Route::get('logout', [AccountController::class, 'logout'])->name('account.logout');
         Route::post('updateProfile', [AccountController::class, 'updateProfile'])->name('account.updateProfile');
         Route::post('books', [AccountController::class, 'index'])->name('books.index');
+
+
+
+
+        Route::get('book-listing', [BookController::class, 'books'])->name('books.list');
     });
 });

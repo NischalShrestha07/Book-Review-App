@@ -11,18 +11,30 @@ class BookController extends Controller
     {
         return view('books.list');
     }
+    public function books()
+    {
+        return view('book-listing');
+    }
 
     public function store()
     {
+
+        //
     }
 
     public function edit()
     {
+
+        //
     }
     public function update()
     {
+
+        //
     }
     public function destroy()
     {
+
+        //
     }
 }

@@ -24,7 +24,7 @@
                 <div class="card-body sidebar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a href="book-listing.html">Books</a>
+                            <a href="{{ route('books.list') }}">Books</a>
                         </li>
                         <li class="nav-item">
                             <a href="reviews.html">Reviews</a>
